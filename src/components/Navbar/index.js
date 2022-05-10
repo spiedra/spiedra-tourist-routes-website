@@ -18,9 +18,9 @@ import CloseIcon from "@mui/icons-material/Close";
 import HomeIcon from "@mui/icons-material/Home";
 
 import { navbarItems } from "./consts/index";
-import { navbarStyles } from "./styles";
+import { theme } from "../../styles/theme";
 
-const drawerWidth = 300;
+const drawerWidth = 260;
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +32,7 @@ const Navbar = () => {
 
   const drawer = (
     <div>
-      <Toolbar sx={navbarStyles.toolbarClose}>
+      <Toolbar sx={{ justifyContent: "flex-end" }}>
         <IconButton
           color="inherit"
           aria-label="open drawer"
@@ -50,8 +50,20 @@ const Navbar = () => {
             navigate("/");
           }}
         >
-          <ListItemIcon sx={navbarStyles.icons}>{<HomeIcon />}</ListItemIcon>
-          <ListItemText sx={navbarStyles.text} primary="Inicio" />
+          <ListItemIcon
+            sx={{ color: theme.palette.primary.main, marginLeft: "20px" }}
+          >
+            {<HomeIcon />}
+          </ListItemIcon>
+          <ListItemText
+            sx={{
+              "& span": {
+                marginLeft: "-10px",
+                fontSize: "16px",
+              },
+            }}
+            primary="Inicio"
+          />
         </ListItem>
       </List>
       <Divider />
@@ -64,8 +76,20 @@ const Navbar = () => {
               navigate(item.route);
             }}
           >
-            <ListItemIcon sx={navbarStyles.icons}>{item.icon}</ListItemIcon>
-            <ListItemText sx={navbarStyles.text} primary={item.label} />
+            <ListItemIcon
+              sx={{ color: theme.palette.primary.main, marginLeft: "20px" }}
+            >
+              {item.icon}
+            </ListItemIcon>
+            <ListItemText
+              sx={{
+                "& span": {
+                  marginLeft: "-10px",
+                  fontSize: "16px",
+                },
+              }}
+              primary={item.label}
+            />
           </ListItem>
         ))}
       </List>
@@ -74,7 +98,7 @@ const Navbar = () => {
 
   return (
     <>
-      <AppBar position="fixed" sx={navbarStyles.appBar}>
+      <AppBar position="fixed" sx={{ width: "100%" }}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -90,7 +114,10 @@ const Navbar = () => {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Box component="nav" sx={navbarStyles.nav}>
+      <Box
+        component="nav"
+        sx={{ width: { md: drawerWidth }, flexShrink: { sm: 0 } }}
+      >
         <Drawer
           variant="temporary"
           open={isOpen}

@@ -7,6 +7,6 @@ export const navbarItems = [
     id: 0,
     icon: <AirlineStopsIcon />,
     label: 'Rutas Turísticas',
-    route: 'learning-style'
+    route: 'tourist-routes'
   }
 ]
