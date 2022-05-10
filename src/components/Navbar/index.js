@@ -1,38 +1,38 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router";
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router'
 
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
+import AppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
+import Divider from '@mui/material/Divider'
+import Drawer from '@mui/material/Drawer'
+import IconButton from '@mui/material/IconButton'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
 
-import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from "@mui/icons-material/Close";
-import HomeIcon from "@mui/icons-material/Home";
+import MenuIcon from '@mui/icons-material/Menu'
+import CloseIcon from '@mui/icons-material/Close'
+import HomeIcon from '@mui/icons-material/Home'
 
-import { navbarItems } from "./consts/index";
-import { theme } from "../../styles/theme";
+import { navbarItems } from './consts/index'
+import { theme } from '../../styles/theme'
 
-const drawerWidth = 260;
+const drawerWidth = 260
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false)
+  const navigate = useNavigate()
 
   const handleDrawerToggle = () => {
-    setIsOpen(!isOpen);
-  };
+    setIsOpen(!isOpen)
+  }
 
   const drawer = (
     <div>
-      <Toolbar sx={{ justifyContent: "flex-end" }}>
+      <Toolbar sx={{ justifyContent: 'flex-end' }}>
         <IconButton
           color="inherit"
           aria-label="open drawer"
@@ -47,20 +47,20 @@ const Navbar = () => {
         <ListItem
           button
           onClick={() => {
-            navigate("/");
+            navigate('/')
           }}
         >
           <ListItemIcon
-            sx={{ color: theme.palette.primary.main, marginLeft: "20px" }}
+            sx={{ color: theme.palette.primary.main, marginLeft: '20px' }}
           >
             {<HomeIcon />}
           </ListItemIcon>
           <ListItemText
             sx={{
-              "& span": {
-                marginLeft: "-10px",
-                fontSize: "16px",
-              },
+              '& span': {
+                marginLeft: '-10px',
+                fontSize: '16px'
+              }
             }}
             primary="Inicio"
           />
@@ -73,20 +73,20 @@ const Navbar = () => {
             button
             key={item.id}
             onClick={() => {
-              navigate(item.route);
+              navigate(item.route)
             }}
           >
             <ListItemIcon
-              sx={{ color: theme.palette.primary.main, marginLeft: "20px" }}
+              sx={{ color: theme.palette.primary.main, marginLeft: '20px' }}
             >
               {item.icon}
             </ListItemIcon>
             <ListItemText
               sx={{
-                "& span": {
-                  marginLeft: "-10px",
-                  fontSize: "16px",
-                },
+                '& span': {
+                  marginLeft: '-10px',
+                  fontSize: '16px'
+                }
               }}
               primary={item.label}
             />
@@ -94,18 +94,18 @@ const Navbar = () => {
         ))}
       </List>
     </div>
-  );
+  )
 
   return (
     <>
-      <AppBar position="fixed" sx={{ width: "100%" }}>
+      <AppBar position="fixed" sx={{ width: '100%' }}>
         <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { md: "none" } }}
+            sx={{ mr: 2, display: { md: 'none' } }}
           >
             <MenuIcon />
           </IconButton>
@@ -123,14 +123,14 @@ const Navbar = () => {
           open={isOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true,
+            keepMounted: true
           }}
           sx={{
-            display: { xs: "block", md: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
+            display: { xs: 'block', md: 'none' },
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
+              width: drawerWidth
+            }
           }}
         >
           {drawer}
@@ -138,13 +138,13 @@ const Navbar = () => {
         <Drawer
           variant="permanent"
           sx={{
-            display: { xs: "none", md: "block" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
+            display: { xs: 'none', md: 'block' },
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
               width: drawerWidth,
-              height: "100vh",
-              position: "static",
-            },
+              height: '100vh',
+              position: 'static'
+            }
           }}
           open
         >
@@ -152,7 +152,7 @@ const Navbar = () => {
         </Drawer>
       </Box>
     </>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

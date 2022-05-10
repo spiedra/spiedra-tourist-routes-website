@@ -1,6 +1,6 @@
 import React from 'react'
 
-import AirlineStopsIcon from '@mui/icons-material/AirlineStops';
+import AirlineStopsIcon from '@mui/icons-material/AirlineStops'
 
 export const navbarItems = [
   {
