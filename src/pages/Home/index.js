@@ -12,7 +12,8 @@ const Home = () => {
         alignItems: 'center',
         textAlign: 'center',
         marginTop: '5rem',
-        height: '100vh'
+        height: '100vh',
+        px: '1.5rem'
       }}
     >
       <h1>Pagina home</h1>

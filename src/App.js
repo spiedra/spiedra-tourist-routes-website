@@ -10,13 +10,14 @@ const drawerWidth = 260
 function App () {
   return (
     <>
-      <Box sx={{ display: 'flex', height: '100vh' }}>
+      <Box sx={{ display: 'flex' }}>
         <Navbar />
         <Box
           component="main"
           sx={{
             flexGrow: 1,
             py: 6,
+            height: '100%',
             width: { sm: `calc(100% - ${drawerWidth}px)` }
           }}
         >
