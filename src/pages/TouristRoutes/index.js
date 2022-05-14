@@ -84,7 +84,7 @@ const TouristRoutes = () => {
                 />
               ))
             }
-            style={{ width: 500 }}
+            sx={{ width: { xs: '100%', md: '55%' } }}
             renderInput={(params) => (
               <TextField {...params} placeholder="Categoría" />
             )}

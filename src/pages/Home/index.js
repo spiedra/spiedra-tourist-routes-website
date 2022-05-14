@@ -1,22 +1,23 @@
 import React from 'react'
 
-import Container from '@mui/material/Container'
+import Box from '@mui/material/Box'
 
 const Home = () => {
   return (
-    <Container
+    <Box
       sx={{
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'start',
         alignItems: 'center',
         textAlign: 'center',
-        marginTop: '5rem'
+        marginTop: '5rem',
+        height: '100vh'
       }}
     >
       <h1>Pagina home</h1>
       <h2>Podemos incluir información de la pagina</h2>
-    </Container>
+    </Box>
   )
 }
 

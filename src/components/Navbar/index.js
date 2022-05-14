@@ -116,7 +116,11 @@ const Navbar = () => {
       </AppBar>
       <Box
         component="nav"
-        sx={{ width: { md: drawerWidth }, flexShrink: { sm: 0 } }}
+        sx={{
+          width: { md: drawerWidth },
+          flexShrink: { sm: 0 },
+          height: '100vh'
+        }}
       >
         <Drawer
           variant="temporary"
