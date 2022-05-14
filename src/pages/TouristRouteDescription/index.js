@@ -32,21 +32,25 @@ const TouristRouteDescription = () => {
         >
           <h1>{touristRoute.name}</h1>
           <h2>{touristRoute.location}</h2>
-          <Box component="p" sx={{ textAlign: 'justify', lineHeight: '28px' }}>
-            Zonas Arqueológicas, Tradiciones Ancestrales, Gastronomía,
-            Naturaleza y muchas cosas más van uniendo los diferentes destinos
-            que tienen algo en común a través de las Rutas Turísiticas de
-            México, para que aproveches tus viajes al máximo.
-          </Box>
           <Box
+            component="img"
             sx={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: '40px',
-              justifyContent: 'center'
+              maxWidth: { xs: '100%', md: '100%' }
             }}
-          >
-            {name}
+            alt={`Imagen de ${touristRoute.name}`}
+            src={touristRoute.images[0]}
+          />
+          <Box>
+            <h2>Ciudades que incluye la ruta</h2>
+            {touristRoute.cities.map((item) => (
+              <Box component="ul" key={item}>
+                <li>{item}</li>
+              </Box>
+            ))}
+          </Box>
+          <h2>{`Acerca de la ruta ${touristRoute.name}`}</h2>
+          <Box component="p" sx={{ textAlign: 'justify', lineHeight: '28px' }}>
+            {touristRoute.description}
           </Box>
         </Box>
           )
