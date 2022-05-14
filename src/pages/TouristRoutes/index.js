@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import SearchIcon from '@mui/icons-material/Search'
 
 import { useNavigate } from 'react-router'
 
@@ -8,7 +9,8 @@ import {
   CardContent,
   CardMedia,
   Typography,
-  Box
+  Box,
+  Button
 } from '@mui/material'
 import { getTouristRoutesData } from '../../services'
 
@@ -26,6 +28,10 @@ const TouristRoutes = () => {
     navigate(`/tourist-routes/${param}`)
   }
 
+  const handleChange = (value) => {
+    console.log(value)
+  }
+
   return (
     <>
       <Box
@@ -35,18 +41,51 @@ const TouristRoutes = () => {
         }}
       >
         <h1>Rutas Turísticas</h1>
-        <Box component="p" sx={{ textAlign: 'justify', lineHeight: '28px' }}>
-          Zonas Arqueológicas, Tradiciones Ancestrales, Gastronomía, Naturaleza
-          y muchas cosas más van uniendo los diferentes destinos que tienen algo
-          en común a través de las Rutas Turísiticas de México, para que
-          aproveches tus viajes al máximo.
+        <Box
+          sx={{
+            backgroundColor: '#f3f3f3',
+            borderRadius: '10px',
+            width: { xs: '100%', md: '50%' },
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '100%'
+            }}
+          >
+            <Box
+              component="input"
+              onChange={(e) => handleChange(e.target.value)}
+              sx={{
+                backgroundColor: '#f3f3f3',
+                fontSize: '1.2rem',
+                border: 'none',
+                borderBottom: '0.3rem solid transparent',
+                borderRadius: '4px 0px 0px 4px',
+                height: '3rem',
+                outline: 'none',
+                padding: '0 0.625rem',
+                width: ' 100%'
+              }}
+            />
+            <Button>
+              <SearchIcon />
+            </Button>
+          </Box>
         </Box>
         <Box
           sx={{
             display: 'flex',
             flexWrap: 'wrap',
             gap: '40px',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            mt: '2rem'
           }}
         >
           {touristRoutes

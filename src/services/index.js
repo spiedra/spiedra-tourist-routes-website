@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const getTouristRoutesData = async () => {
   const baseURL =
-    'http://localhost:8080/tourist-routes-api/tourist-routes-data'
+    'https://tourist-routes-api.vercel.app/tourist-routes-api/tourist-routes-data'
   try {
     const { data } = await axios.get(baseURL)
     return data
