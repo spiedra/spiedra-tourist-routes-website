@@ -1,6 +1,4 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
-import SearchIcon from '@mui/icons-material/Search'
 
 import { useNavigate } from 'react-router'
 
@@ -11,49 +9,36 @@ import {
   CardMedia,
   Typography,
   Box,
-  Button
+  Autocomplete,
+  TextField,
+  Chip
 } from '@mui/material'
-import { getTouristRoutesData } from '../../services'
-import styled from '@emotion/styled'
-import Chip from '@mui/material/Chip'
-import Paper from '@mui/material/Paper'
-import TagFacesIcon from '@mui/icons-material/TagFaces'
 
-const ListItem = styled('li')(({ theme }) => ({
-  margin: theme.spacing(0.5)
-}))
+import { getTouristRoutesData } from '../../services'
+
+const keyWords = [
+  { key: 0, class: 'Playa' },
+  { key: 1, class: 'Montaña' },
+  { key: 2, class: 'Familia' },
+  { key: 3, class: 'Fiesta' },
+  { key: 5, class: 'Trabajo' }
+]
 
 const TouristRoutes = () => {
-  const [touristRoutes, setTouristRoutes] = useState()
+  const [data, setData] = useState()
+  const [touristRoutesData, setTouristRoutesData] = useState()
   const navigate = useNavigate()
-
-  const [chipData, setChipData] = React.useState([
-    { key: 0, label: 'Angular' },
-    { key: 1, label: 'jQuery' },
-    { key: 2, label: 'Polymer' },
-    { key: 3, label: 'Polymer' },
-    { key: 4, label: 'Polymer' },
-    { key: 5, label: 'Polymer' }
-  ])
-
-  const handleDelete = (chipToDelete) => () => {
-    setChipData((chips) =>
-      chips.filter((chip) => chip.key !== chipToDelete.key)
-    )
-  }
+  const [chipData, setChipData] = useState([])
 
   useEffect(() => {
     getTouristRoutesData().then((response) => {
-      setTouristRoutes(response)
+      setData(response)
+      setTouristRoutesData(response)
     })
   }, [])
 
   const handleOnClick = (param) => {
     navigate(`/tourist-routes/${param}`)
-  }
-
-  const handleChange = (value) => {
-    console.log(value)
   }
 
   return (
@@ -67,71 +52,43 @@ const TouristRoutes = () => {
         <h1>Rutas Turísticas</h1>
         <Box
           sx={{
-            backgroundColor: '#f3f3f3',
-            borderRadius: '10px',
-            width: { xs: '100%', md: '65%' },
             display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            width: '100%'
           }}
         >
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              width: '100%'
+          <Autocomplete
+            multiple
+            id="fixed-tags-demo"
+            value={chipData}
+            onChange={(event, newValue) => {
+              setChipData([...newValue])
+              setData([...touristRoutesData.filter((x) => {
+                for (const iterator of newValue) {
+                  if (!(iterator.class in x.keyWords)) {
+                    return false
+                  }
+                }
+                return true
+              })])
             }}
-          >
-            <Paper
-              sx={{
-                display: 'flex',
-                justifyContent: 'flex-start',
-                flexDirection: 'row',
-                alignItems: 'center',
-                flexWrap: 'wrap',
-                listStyle: 'none',
-                p: 0.5,
-                m: 0,
-                boxShadow: 'none',
-                width: '100%',
-                backgroundColor: '#f3f3f3'
-              }}
-              component="ul"
-            >
-              {chipData.map((data) => {
-                let icon
-
-                return (
-                  <ListItem key={data.key}>
-                    <Chip
-                      icon={icon}
-                      label={data.label}
-                      onDelete={handleDelete(data)}
-                    />
-                  </ListItem>
-                )
-              })}
-              <Box
-                component="input"
-                onChange={(e) => handleChange(e.target.value)}
-                sx={{
-                  backgroundColor: '#f3f3f3',
-                  fontSize: '1.1rem',
-                  border: 'none',
-                  borderBottom: '0.3rem solid transparent',
-                  borderRadius: '4px 0px 0px 4px',
-                  height: '3rem',
-                  outline: 'none',
-                  paddingLeft: '0.625rem',
-                  width: '25%'
-                }}
-              />
-            </Paper>
-            <Button>
-              <SearchIcon />
-            </Button>
-          </Box>
+            options={keyWords}
+            getOptionLabel={(option) => option.class}
+            renderTags={(tagValue, getTagProps) =>
+              tagValue.map((option, index) => (
+                <Chip
+                  key={option.key}
+                  label={option.class}
+                  {...getTagProps({ index })}
+                />
+              ))
+            }
+            style={{ width: 500 }}
+            renderInput={(params) => (
+              <TextField {...params} placeholder="Categoría" />
+            )}
+          />
         </Box>
         <Box
           sx={{
@@ -142,8 +99,8 @@ const TouristRoutes = () => {
             mt: '2rem'
           }}
         >
-          {touristRoutes
-            ? touristRoutes.map((item) => (
+          {data
+            ? data.map((item) => (
                 <Card
                   key={item.name}
                   sx={{ maxWidth: 345 }}
