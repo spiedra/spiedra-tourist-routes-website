@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 
 import { useNavigate } from 'react-router'
@@ -23,7 +22,9 @@ const TouristRoutes = () => {
     })
   }, [])
 
-  const handleOnClick = (param) => { alert(param) }
+  const handleOnClick = (param) => {
+    navigate(`/tourist-routes/${param}`)
+  }
 
   return (
     <>
@@ -50,7 +51,11 @@ const TouristRoutes = () => {
         >
           {touristRoutes
             ? touristRoutes.map((item) => (
-                <Card key={item.name} sx={{ maxWidth: 345 }} onClick={() => handleOnClick(item.name)}>
+                <Card
+                  key={item.name}
+                  sx={{ maxWidth: 345 }}
+                  onClick={() => handleOnClick(item.name)}
+                >
                   <CardActionArea>
                     <CardMedia
                       component="img"
