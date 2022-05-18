@@ -20,7 +20,7 @@ const AboutUs = () => {
               margin: 'auto'
             }}
           >
-            <h2>Rutas turísiticas El Cusuco</h2>
+            <h2>Rutas turísiticas Tu-Destino</h2>
           </Box>
           <Box>
             <p>
