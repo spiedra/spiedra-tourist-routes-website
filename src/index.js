@@ -12,6 +12,7 @@ import NotFound from './pages/NotFound'
 import TouristRoutes from './pages/TouristRoutes'
 import TouristRouteDescription from './pages/TouristRouteDescription'
 import SiteMap from './pages/SiteMap'
+import AboutUs from './pages/AboutUs'
 
 const container = document.getElementById('root')
 const root = ReactDOM.createRoot(container)
@@ -25,6 +26,7 @@ root.render(
             <Route index element={<Home />} />
             <Route path="tourist-routes" element={<TouristRoutes />} />
             <Route path="site-map" element={<SiteMap />} />
+            <Route path="about-us" element={<AboutUs />} />
             <Route path="tourist-routes/:name" element={<TouristRouteDescription />} />
             <Route path="*" element={<NotFound />} />
           </Route>

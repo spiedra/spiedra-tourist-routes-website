@@ -68,13 +68,4 @@ const SiteMap = () => {
   )
 }
 
-/*
-{arraySites.forEach((element, index) => (
-          <Grid item key={index}>
-            <CircleIcon fontSize='large'></CircleIcon>
-            <lablel alignItems='center'>{element}</lablel>
-          </Grid>
-        ))}
-        */
-
 export default SiteMap
