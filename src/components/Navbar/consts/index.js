@@ -1,12 +1,18 @@
 import React from 'react'
 
-import AirlineStopsIcon from '@mui/icons-material/AirlineStops'
+import { AirlineStops, Map } from '@mui/icons-material'
 
 export const navbarItems = [
   {
     id: 0,
-    icon: <AirlineStopsIcon />,
+    icon: <AirlineStops />,
     label: 'Rutas Turísticas',
     route: 'tourist-routes'
+  },
+  {
+    id: 1,
+    icon: <Map />,
+    label: 'Mapa del sitio',
+    route: 'site-map'
   }
 ]
