@@ -13,6 +13,7 @@ import TouristRoutes from './pages/TouristRoutes'
 import TouristRouteDescription from './pages/TouristRouteDescription'
 import SiteMap from './pages/SiteMap'
 import AboutUs from './pages/AboutUs'
+import ContactUs from './pages/ContactUs'
 
 const container = document.getElementById('root')
 const root = ReactDOM.createRoot(container)
@@ -27,6 +28,7 @@ root.render(
             <Route path="tourist-routes" element={<TouristRoutes />} />
             <Route path="site-map" element={<SiteMap />} />
             <Route path="about-us" element={<AboutUs />} />
+            <Route path="contact-us" element={<ContactUs />} />
             <Route path="tourist-routes/:name" element={<TouristRouteDescription />} />
             <Route path="*" element={<NotFound />} />
           </Route>
