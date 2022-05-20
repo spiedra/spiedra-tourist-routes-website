@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box } from '@mui/system'
-import { TextField, Button } from '@mui/material'
+import { TextField, Button, TextareaAutosize } from '@mui/material'
 
 const ContactUs = () => {
   return (
@@ -18,16 +18,17 @@ const ContactUs = () => {
               Arriésgate a tomar la mejor aventura de tu vida. Por favor, ponte en contacto con nosotros. ¿Cómo podemos ayudarte?
               ¿Qué es lo que esperas de las rutas turísticas? Queremos leerte...
             </p>
-            <Box sx={{ display: 'flex', flexDirection: 'column', maxWidth: '50vw', margin: 'auto' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', maxWidth: { xs: '100%', md: '55%' }, margin: 'auto' }}>
             <TextField sx={{ marginBottom: '10px' }}
              label={'Nombre'}/>
              <TextField sx={{ marginBottom: '10px' }}
              label={'Correo electrónico'}/>
              <TextField sx={{ marginBottom: '10px' }}
              label={'¿De dónde nos visitas?'}/>
-             <TextField sx={{ marginBottom: '10px' }}
-             label={'Mensaje'}/>
-             <Button
+             <TextareaAutosize sx={{ marginBottom: '10px' }}
+            placeholder="mensaje"
+            minRows={5}/>
+             <Button sx={{ marginTop: '10px' }}
              variant="contained"
              color="primary"
              >Enviar</Button>
