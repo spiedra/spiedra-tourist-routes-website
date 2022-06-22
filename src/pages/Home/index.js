@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react'
 
 import { Controller, useForm } from 'react-hook-form'
@@ -9,9 +8,16 @@ const Home = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors },
-    reset
-  } = useForm()
+    formState: { errors }
+  } = useForm({
+    defaultValues: {
+      price: '',
+      type: '',
+      services: '',
+      access: '',
+      capacity: ''
+    }
+  })
 
   const onSubmit = (values) => {
     console.log(values)
@@ -131,20 +137,26 @@ const Home = () => {
               )}
             />
           </Grid>
-        </Grid>
-        <Box
-          sx={{ width: '100%', display: 'flex', justifyContent: 'flex-start' }}
-        >
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            sx={{ width: '25%', mt: '1rem' }}
-            onClick={handleSubmit}
+          <Grid
+            item
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '42.8ch'
+            }}
           >
-            Consultar
-          </Button>
-        </Box>
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              sx={{ width: '65%' }}
+              onClick={handleSubmit}
+            >
+              Consultar
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
     </>
   )

@@ -1,4 +1,7 @@
 import React from 'react'
+
+import PropTypes from 'prop-types'
+
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import Dialog from '@mui/material/Dialog'
@@ -22,6 +25,16 @@ const Modal = (props) => {
       </DialogActions>
     </Dialog>
   )
+}
+
+Modal.propTypes = {
+  onClose: PropTypes.func,
+  isOpen: PropTypes.bool,
+  content: PropTypes.object,
+  maxWidth: PropTypes.string,
+  idForm: PropTypes.string,
+  onSubmit: PropTypes.func,
+  title: PropTypes.string
 }
 
 export default Modal

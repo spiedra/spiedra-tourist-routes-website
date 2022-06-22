@@ -22,8 +22,8 @@ const TouristRouteDescription = () => {
 
   return (
     <>
-      {touristRoute
-        ? (
+     {touristRoute
+       ? (
         <Box>
           <h1>{touristRoute.name}</h1>
           <h2>{touristRoute.location}</h2>
@@ -48,10 +48,10 @@ const TouristRouteDescription = () => {
             {touristRoute.description}
           </Box>
         </Box>
-          )
-        : (
-            'Cargado'
-          )}
+         )
+       : (
+           'Cargado'
+         )}
     </>
   )
 }
