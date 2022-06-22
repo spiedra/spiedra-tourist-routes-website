@@ -24,12 +24,7 @@ const TouristRouteDescription = () => {
     <>
       {touristRoute
         ? (
-        <Box
-          sx={{
-            px: '1rem',
-            pt: '.8rem'
-          }}
-        >
+        <Box>
           <h1>{touristRoute.name}</h1>
           <h2>{touristRoute.location}</h2>
           <Box

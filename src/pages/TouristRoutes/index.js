@@ -43,12 +43,7 @@ const TouristRoutes = () => {
 
   return (
     <>
-      <Box
-        sx={{
-          px: '1rem',
-          pt: '.8rem'
-        }}
-      >
+      <Box>
         <h1>Rutas Turísticas</h1>
         <Box
           sx={{

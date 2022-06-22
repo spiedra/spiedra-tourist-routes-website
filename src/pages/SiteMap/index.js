@@ -23,12 +23,7 @@ const SiteMap = () => {
 
   return (
     <>
-      <Box
-        sx={{
-          px: '1rem',
-          pt: '.8rem'
-        }}
-      >
+      <Box>
         <h1>Mapa del sitio</h1>
 
         <Grid

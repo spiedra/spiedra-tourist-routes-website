@@ -4,12 +4,7 @@ import { Box } from '@mui/system'
 const AboutUs = () => {
   return (
     <>
-      <Box
-        sx={{
-          px: '1rem',
-          pt: '.8rem'
-        }}
-      >
+      <Box>
         <h1>Acerca de nosotros</h1>
         <Box>
           <Box

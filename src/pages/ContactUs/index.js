@@ -5,12 +5,7 @@ import { TextField, Button, TextareaAutosize } from '@mui/material'
 const ContactUs = () => {
   return (
     <>
-      <Box
-        sx={{
-          px: '1rem',
-          pt: '.8rem'
-        }}
-      >
+      <Box>
         <h1>Contáctanos</h1>
         <Box>
           <Box>
