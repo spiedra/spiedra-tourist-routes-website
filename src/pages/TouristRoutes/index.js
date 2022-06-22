@@ -9,11 +9,13 @@ import {
   Box,
   Autocomplete,
   TextField,
-  Chip
+  Chip,
+  Paper
 } from '@mui/material'
 
 import { getTouristRoutesData } from '../../services'
 import Modal from '../../components/Modal'
+import Carousel from 'react-material-ui-carousel'
 
 const keyWords = [
   { key: 0, class: 'Playa' },
@@ -46,39 +48,52 @@ const TouristRoutes = () => {
     setIsModalOpen(true)
   }
 
+  // eslint-disable-next-line react/prop-types
+  const CarouselItem = ({ img }) => {
+    return (
+      <Paper sx={{ boxShadow: 'none' }}>
+        <Box
+          component="img"
+          sx={{
+            maxWidth: { xs: '100%', md: '100%' }
+          }}
+          alt="Imagen de un lugar turistico"
+          src={img}
+        />
+      </Paper>
+    )
+  }
+
   const modalBody = (
     <>
-    {modalData
-      ? (
-       <Box>
-         <h1>{modalData.name}</h1>
-         <h2>{modalData.location}</h2>
-         <Box
-           component="img"
-           sx={{
-             maxWidth: { xs: '100%', md: '100%' }
-           }}
-           alt={`Imagen de ${modalData.name}`}
-           src={modalData.images[0]}
-         />
-         <Box>
-           <h2>Ciudades que incluye la ruta</h2>
-           {modalData.cities.map((item) => (
-             <Box component="ul" key={item}>
-               <li>{item}</li>
-             </Box>
-           ))}
-         </Box>
-         <h2>{`Acerca de la ruta ${modalData.name}`}</h2>
-         <Box component="p" sx={{ textAlign: 'justify', lineHeight: '28px' }}>
-           {modalData.description}
-         </Box>
-       </Box>
-        )
-      : (
-          'Cargado'
-        )}
-   </>
+      {modalData
+        ? (
+        <Box>
+          <h1>{modalData.name}</h1>
+          <h2>{modalData.location}</h2>
+          <Carousel sx={{ width: '55%' }}>
+            {modalData.images.map((item, i) => (
+              <CarouselItem key={i} img={item} />
+            ))}
+          </Carousel>
+          <Box>
+            <h2>Ciudades que incluye la ruta</h2>
+            {modalData.cities.map((item) => (
+              <Box component="ul" key={item}>
+                <li>{item}</li>
+              </Box>
+            ))}
+          </Box>
+          <h2>{`Acerca de la ruta ${modalData.name}`}</h2>
+          <Box component="p" sx={{ textAlign: 'justify', lineHeight: '28px' }}>
+            {modalData.description}
+          </Box>
+        </Box>
+          )
+        : (
+            'Cargado'
+          )}
+    </>
   )
 
   return (
@@ -99,14 +114,16 @@ const TouristRoutes = () => {
             value={chipData}
             onChange={(event, newValue) => {
               setChipData([...newValue])
-              setData([...touristRoutesData.filter((x) => {
-                for (const iterator of newValue) {
-                  if (!(iterator.class in x.keyWords)) {
-                    return false
+              setData([
+                ...touristRoutesData.filter((x) => {
+                  for (const iterator of newValue) {
+                    if (!(iterator.class in x.keyWords)) {
+                      return false
+                    }
                   }
-                }
-                return true
-              })])
+                  return true
+                })
+              ])
             }}
             options={keyWords}
             getOptionLabel={(option) => option.class}
