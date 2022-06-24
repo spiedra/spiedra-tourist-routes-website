@@ -13,7 +13,7 @@ import {
   Paper
 } from '@mui/material'
 
-import { getTouristRoutesData } from '../../services'
+import { getTouristRoutesData } from '../../services/gets'
 import Modal from '../../components/Modal'
 import Carousel from 'react-material-ui-carousel'
 
@@ -76,14 +76,6 @@ const TouristRoutes = () => {
               <CarouselItem key={i} img={item} />
             ))}
           </Carousel>
-          <Box>
-            <h2>Ciudades que incluye la ruta</h2>
-            {modalData.cities.map((item) => (
-              <Box component="ul" key={item}>
-                <li>{item}</li>
-              </Box>
-            ))}
-          </Box>
           <h2>{`Acerca de la ruta ${modalData.name}`}</h2>
           <Box component="p" sx={{ textAlign: 'justify', lineHeight: '28px' }}>
             {modalData.description}
@@ -152,9 +144,9 @@ const TouristRoutes = () => {
           }}
         >
           {data
-            ? data.map((item) => (
+            ? data.map((item, index) => (
                 <Card
-                  key={item.name}
+                  key={index}
                   sx={{ maxWidth: 345 }}
                   onClick={() => handleOnClick(item.name)}
                 >

@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 
 import { Box } from '@mui/system'
 
-import { getTouristRoutesData } from '../../services'
+import { getTouristRoutesData } from '../../services/gets'
 
 const TouristRouteDescription = () => {
   const [touristRoute, setTouristRoute] = useState()

@@ -3,6 +3,7 @@ import React from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
 import { Box, Button, Grid, MenuItem, TextField } from '@mui/material'
+import { getRecommendedTouristRoutes } from '../../services/posts'
 
 const Home = () => {
   const {
@@ -20,7 +21,9 @@ const Home = () => {
   })
 
   const onSubmit = (values) => {
-    console.log(values)
+    getRecommendedTouristRoutes(values).then((response) => {
+      console.log(response)
+    })
   }
 
   return (
