@@ -1,11 +1,39 @@
-import React from 'react'
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react'
 
 import { Controller, useForm } from 'react-hook-form'
 
-import { Box, Button, Grid, MenuItem, TextField } from '@mui/material'
-import { getRecommendedTouristRoutes } from '../../services/posts'
+import {
+  Box, Button, Grid, MenuItem, TextField,
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Typography,
+  Autocomplete,
+  Chip,
+  Paper
+} from '@mui/material'
+import Modal from '../../components/Modal'
+
+import Carousel from 'react-material-ui-carousel'
+
+import { getRecommendedTouristClass } from '../../services/posts'
+import { getRecommendedRoutes } from '../../services/gets'
+
+const category = {
+  peaceful: 'pacifista',
+  conqueror: 'aventurero',
+  extremist: 'extremista'
+}
 
 const Home = () => {
+  const [touristRoutes, setTouristRoutes] = useState()
+  const [touristRoutePlaces, setTouristRoutePlaces] = useState()
+  const [touristClass, setTouristClass] = useState('sin clase')
+  const [touristPlace, setTouristPlace] = useState('sin lugar')
+  const [isModalPlacesOpen, setIsModalPlacesOpen] = useState(false)
+  const [isModalShowPlaceOpen, setIsModalShowPlaceOpen] = useState(false)
   const {
     control,
     handleSubmit,
@@ -20,11 +48,116 @@ const Home = () => {
     }
   })
 
-  const onSubmit = (values) => {
-    getRecommendedTouristRoutes(values).then((response) => {
-      console.log(response)
+  // eslint-disable-next-line react/prop-types
+  const CarouselItem = ({ img }) => {
+    return (
+      <Paper sx={{ boxShadow: 'none' }}>
+        <Box
+          component="img"
+          sx={{
+            maxWidth: { xs: '100%', md: '100%' }
+          }}
+          alt="Imagen de un lugar turistico"
+          src={img}
+        />
+      </Paper>
+    )
+  }
+
+  const onSubmit = async (values) => {
+    const recommendedClass = await getRecommendedTouristClass(values)
+    setTouristClass(category[recommendedClass.result])
+    getRecommendedRoutes(recommendedClass.result).then(response => {
+      setTouristRoutes(response.data.touristRouteResult)
     })
   }
+
+  const OnShowTouristPlaces = (index) => {
+    setTouristRoutePlaces(touristRoutes[index].places)
+    setIsModalPlacesOpen(true)
+  }
+
+  const onShowPlaceDetails = (index) => {
+    console.log(touristRoutePlaces[index])
+    setTouristPlace(touristRoutePlaces[index])
+    setIsModalShowPlaceOpen(true)
+  }
+
+  const modalPlacesBody = (
+    <>
+ <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '40px',
+            justifyContent: 'center',
+            mt: '2rem'
+          }}
+        >
+          {touristRoutePlaces
+            ? (touristRoutePlaces.map((item, index) => (
+                <Card
+                  key={index}
+                  sx={{ maxWidth: 345 }}
+                  onClick={() => onShowPlaceDetails(index)}
+                >
+                  <CardActionArea>
+                  <Carousel sx={{ width: '100%' }}>
+                    {item.images.map((item, i) => (
+                      <CarouselItem key={i} img={item} />
+                    ))}
+          </Carousel>
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        {item.name}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {item.description}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              ))
+              )
+            : 'Cargando'}
+        </Box>
+    </>
+  )
+
+  const modalShowPlaceBody = (
+    <>
+ <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '40px',
+            justifyContent: 'center',
+            mt: '2rem'
+          }}
+        >
+           {touristPlace
+             ? (
+        <Box>
+          <h1>{touristPlace.name}</h1>
+          <h2>{touristPlace.location}</h2>
+          <Carousel sx={{ width: '100%' }}>
+                    {touristPlace.images.map((item, i) => (
+                      <CarouselItem key={i} img={item} />
+                    ))}
+          </Carousel>
+          <h2>Localización en mapa</h2>
+          <h2>{`Acerca de la ruta ${touristPlace.name}`}</h2>
+          <Box component="p" sx={{ textAlign: 'justify', lineHeight: '28px' }}>
+            {touristPlace.description}
+          </Box>
+        </Box>
+               )
+             : (
+                 'Cargado'
+               )}
+        </Box>
+    </>
+  )
 
   return (
     <>
@@ -161,6 +294,58 @@ const Home = () => {
           </Grid>
         </Grid>
       </Box>
+      <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '40px',
+            justifyContent: 'center',
+            mt: '2rem'
+          }}
+        >
+          {touristRoutes
+            ? (touristRoutes.map((item, index) => (
+                <Card
+                  key={index}
+                  sx={{ maxWidth: 345 }}
+                  onClick={() => OnShowTouristPlaces(index)}
+                >
+                  <CardActionArea>
+                    <CardMedia
+                      component="img"
+                      height="140"
+                      alt={`Imagen de ${item.title}`}
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        {item.title}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {item.description}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              ))
+              )
+            : 'Cargando'}
+        </Box>
+        <Modal
+        isOpen={isModalPlacesOpen}
+        onClose={() => setIsModalPlacesOpen(false)}
+        onSubmit={() => setIsModalPlacesOpen(false)}
+        maxWidth="lg"
+        title={'Detalles de ruta turística tipo ' + touristClass}
+        content={modalPlacesBody}
+        />
+        <Modal
+        isOpen={isModalShowPlaceOpen}
+        onClose={() => setIsModalShowPlaceOpen(false)}
+        onSubmit={() => setIsModalShowPlaceOpen(false)}
+        maxWidth="lg"
+        title={'Detalles de la zona turística'}
+        content={modalShowPlaceBody}
+        />
     </>
   )
 }
