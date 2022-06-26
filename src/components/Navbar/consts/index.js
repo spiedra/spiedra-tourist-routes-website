@@ -6,7 +6,7 @@ export const navbarItems = [
   {
     id: 0,
     icon: <AirlineStops />,
-    label: 'Rutas Turísticas',
+    label: 'Zonas Turísticas',
     route: 'tourist-routes'
   },
   {
