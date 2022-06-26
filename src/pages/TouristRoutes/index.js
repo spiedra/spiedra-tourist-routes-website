@@ -9,13 +9,17 @@ import {
   Box,
   Autocomplete,
   TextField,
-  Chip,
-  Paper
+  Chip
 } from '@mui/material'
 
 import { getTouristRoutesData } from '../../services/gets'
 import Modal from '../../components/Modal'
-import Carousel from 'react-material-ui-carousel'
+
+import {
+  getRandomImage,
+  randomNumberByRange,
+  getMapCoordinates
+} from '../../utils'
 
 const keyWords = [
   { key: 0, class: 'Playa' },
@@ -48,21 +52,14 @@ const TouristRoutes = () => {
     setIsModalOpen(true)
   }
 
-  // eslint-disable-next-line react/prop-types
-  const CarouselItem = ({ img }) => {
+  const getLocation = () => {
+    const { x, y } = getMapCoordinates(randomNumberByRange(0, 9))
     return (
-      <Paper sx={{ boxShadow: 'none' }}>
-        <Box
-          component="img"
-          sx={{
-            maxWidth: { xs: '100%', md: '100%' }
-          }}
-          alt="Imagen de un lugar turistico"
-          src={img}
-        />
-      </Paper>
+      'https://maps.google.com/?ll=' + x + ',' + y + '&z=14&t=m&output=embed'
     )
   }
+
+  // eslint-disable-next-line react/prop-types
 
   const modalBody = (
     <>
@@ -71,11 +68,28 @@ const TouristRoutes = () => {
         <Box>
           <h1>{modalData.name}</h1>
           <h2>{modalData.location}</h2>
-          <Carousel sx={{ width: '55%' }}>
-            {modalData.images.map((item, i) => (
-              <CarouselItem key={i} img={item} />
-            ))}
-          </Carousel>
+          <Box
+                    component="img"
+                    sx={{
+                      Width: { xs: '100%', md: '430px' },
+                      height: '430px',
+                      objectFit: 'cover'
+                    }}
+                    alt="Imagen de un lugar turistico"
+                    src={getRandomImage(randomNumberByRange(0, 19))}
+            />
+          <h2>Localización en Mapa</h2>
+          <Box sx={{ width: '100%' }}>
+              <iframe
+                src={getLocation()}
+                width="100%"
+                height="450"
+                style={{ border: 0 }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </Box>
           <h2>{`Acerca de la ruta ${modalData.name}`}</h2>
           <Box component="p" sx={{ textAlign: 'justify', lineHeight: '28px' }}>
             {modalData.description}
@@ -154,7 +168,7 @@ const TouristRoutes = () => {
                     <CardMedia
                       component="img"
                       height="140"
-                      image={item.images[0]}
+                      image={getRandomImage(randomNumberByRange(0, 19))}
                       alt={`Imagen de ${item.name}`}
                     />
                     <CardContent>
