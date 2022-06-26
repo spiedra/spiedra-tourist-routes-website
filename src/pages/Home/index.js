@@ -4,7 +4,11 @@ import React, { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
 import {
-  Box, Button, Grid, MenuItem, TextField,
+  Box,
+  Button,
+  Grid,
+  MenuItem,
+  TextField,
   Card,
   CardActionArea,
   CardContent,
@@ -18,8 +22,15 @@ import Modal from '../../components/Modal'
 
 import Carousel from 'react-material-ui-carousel'
 
+import {
+  getRandomImage,
+  randomNumberByRange,
+  getMapCoordinates
+} from '../../utils'
+
 import { getRecommendedTouristClass } from '../../services/posts'
 import { getRecommendedRoutes } from '../../services/gets'
+import { height } from '@mui/system'
 
 const category = {
   peaceful: 'pacifista',
@@ -28,10 +39,10 @@ const category = {
 }
 
 const Home = () => {
-  const [touristRoutes, setTouristRoutes] = useState()
-  const [touristRoutePlaces, setTouristRoutePlaces] = useState()
-  const [touristClass, setTouristClass] = useState('sin clase')
-  const [touristPlace, setTouristPlace] = useState('sin lugar')
+  const [touristRoutes, setTouristRoutes] = useState([])
+  const [touristRoutePlaces, setTouristRoutePlaces] = useState([])
+  const [touristClass, setTouristClass] = useState()
+  const [touristPlace, setTouristPlace] = useState()
   const [isModalPlacesOpen, setIsModalPlacesOpen] = useState(false)
   const [isModalShowPlaceOpen, setIsModalShowPlaceOpen] = useState(false)
   const {
@@ -67,8 +78,8 @@ const Home = () => {
   const onSubmit = async (values) => {
     const recommendedClass = await getRecommendedTouristClass(values)
     setTouristClass(category[recommendedClass.result])
-    getRecommendedRoutes(recommendedClass.result).then(response => {
-      setTouristRoutes(response.data.touristRouteResult)
+    getRecommendedRoutes(recommendedClass.result).then((response) => {
+      setTouristRoutes(response.touristRouteResult)
     })
   }
 
@@ -78,84 +89,111 @@ const Home = () => {
   }
 
   const onShowPlaceDetails = (index) => {
-    console.log(touristRoutePlaces[index])
     setTouristPlace(touristRoutePlaces[index])
     setIsModalShowPlaceOpen(true)
   }
 
+  const getLocation = () => {
+    const { x, y } = getMapCoordinates(randomNumberByRange(0, 9))
+    return (
+      'https://maps.google.com/?ll=' + x + ',' + y + '&z=14&t=m&output=embed'
+    )
+  }
+
   const modalPlacesBody = (
     <>
- <Box
-          sx={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '40px',
-            justifyContent: 'center',
-            mt: '2rem'
-          }}
-        >
-          {touristRoutePlaces
-            ? (touristRoutePlaces.map((item, index) => (
-                <Card
-                  key={index}
-                  sx={{ maxWidth: 345 }}
-                  onClick={() => onShowPlaceDetails(index)}
-                >
-                  <CardActionArea>
-                  <Carousel sx={{ width: '100%' }}>
-                    {item.images.map((item, i) => (
-                      <CarouselItem key={i} img={item} />
-                    ))}
-          </Carousel>
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="div">
-                        {item.name}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {item.description}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              ))
-              )
-            : 'Cargando'}
-        </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '40px',
+          justifyContent: 'center',
+          mt: '2rem'
+        }}
+      >
+        {touristRoutePlaces
+          ? touristRoutePlaces.map((item, index) => (
+              <Card
+                key={index}
+                sx={{ maxWidth: 345 }}
+                onClick={() => onShowPlaceDetails(index)}
+              >
+                <CardActionArea>
+                  <Box
+                    component="img"
+                    sx={{
+                      Width: { xs: '100%', md: '430px' },
+                      height: '430px',
+                      objectFit: 'cover'
+                    }}
+                    alt="Imagen de un lugar turistico"
+                    src={getRandomImage(randomNumberByRange(0, 19))}
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {item.name}
+                    </Typography>
+                    <Typography variant="body1" color="text.secondary">
+                      {item.description}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+          ))
+          : 'Cargando'}
+      </Box>
     </>
   )
 
   const modalShowPlaceBody = (
     <>
- <Box
-          sx={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '40px',
-            justifyContent: 'center',
-            mt: '2rem'
-          }}
-        >
-           {touristPlace
-             ? (
-        <Box>
-          <h1>{touristPlace.name}</h1>
-          <h2>{touristPlace.location}</h2>
-          <Carousel sx={{ width: '100%' }}>
-                    {touristPlace.images.map((item, i) => (
-                      <CarouselItem key={i} img={item} />
-                    ))}
-          </Carousel>
-          <h2>Localización en mapa</h2>
-          <h2>{`Acerca de la ruta ${touristPlace.name}`}</h2>
-          <Box component="p" sx={{ textAlign: 'justify', lineHeight: '28px' }}>
-            {touristPlace.description}
+      <Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '40px'
+        }}
+      >
+        {touristPlace
+          ? (
+          <Box>
+            <h1>{touristPlace.name}</h1>
+            <h2>{touristPlace.location}</h2>
+            <Box
+              component="img"
+              sx={{
+                maxWidth: { xs: '100%', md: '700px' },
+                height: '400px',
+                objectFit: 'cover'
+              }}
+              alt="Imagen de un lugar turistico"
+              src={getRandomImage(randomNumberByRange(0, 19))}
+            />
+            <h2>Localización en mapa</h2>
+            <Box sx={{ width: '100%' }}>
+              <iframe
+                src={getLocation()}
+                width="100%"
+                height="450"
+                style={{ border: 0 }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </Box>
+            <h2>{`Acerca de la ruta ${touristPlace.name}`}</h2>
+            <Box
+              component="p"
+              sx={{ textAlign: 'justify', lineHeight: '28px' }}
+            >
+              {touristPlace.description}
+            </Box>
           </Box>
-        </Box>
-               )
-             : (
-                 'Cargado'
-               )}
-        </Box>
+            )
+          : (
+              'Cargado'
+            )}
+      </Box>
     </>
   )
 
@@ -295,57 +333,51 @@ const Home = () => {
         </Grid>
       </Box>
       <Box
-          sx={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '40px',
-            justifyContent: 'center',
-            mt: '2rem'
-          }}
-        >
-          {touristRoutes
-            ? (touristRoutes.map((item, index) => (
-                <Card
-                  key={index}
-                  sx={{ maxWidth: 345 }}
-                  onClick={() => OnShowTouristPlaces(index)}
-                >
-                  <CardActionArea>
-                    <CardMedia
-                      component="img"
-                      height="140"
-                      alt={`Imagen de ${item.title}`}
-                    />
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="div">
-                        {item.title}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {item.description}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              ))
-              )
-            : 'Cargando'}
-        </Box>
-        <Modal
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '40px',
+          justifyContent: 'center',
+          mt: '2rem'
+        }}
+      >
+        {touristRoutes
+          ? touristRoutes.map((item, index) => (
+              <Card
+                key={index}
+                sx={{ maxWidth: 345 }}
+                onClick={() => OnShowTouristPlaces(index)}
+              >
+                <CardActionArea>
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {item.title}
+                    </Typography>
+                    <Typography variant="body1" color="text.secondary">
+                      {item.description}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+          ))
+          : 'Cargando'}
+      </Box>
+      <Modal
         isOpen={isModalPlacesOpen}
         onClose={() => setIsModalPlacesOpen(false)}
         onSubmit={() => setIsModalPlacesOpen(false)}
         maxWidth="lg"
         title={'Detalles de ruta turística tipo ' + touristClass}
         content={modalPlacesBody}
-        />
-        <Modal
+      />
+      <Modal
         isOpen={isModalShowPlaceOpen}
         onClose={() => setIsModalShowPlaceOpen(false)}
         onSubmit={() => setIsModalShowPlaceOpen(false)}
         maxWidth="lg"
         title={'Detalles de la zona turística'}
         content={modalShowPlaceBody}
-        />
+      />
     </>
   )
 }

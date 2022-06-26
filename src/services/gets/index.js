@@ -15,12 +15,12 @@ export const getTouristRoutesData = async () => {
 
 export const getRecommendedRoutes = async (data) => {
   const baseURL =
-    'https://tourist-routes-api.vercel.app/tourist-routes-api/tourist-route-by-class'
+  'http://localhost:8080/tourist-routes-api/tourist-route-by-class'
   try {
-    const response = await axios.get(baseURL, {
+    const response = await axios.post(baseURL, {
       data
     })
-    return response
+    return response.data
   } catch (error) {
     if (error.response) {
       return error.response.status
