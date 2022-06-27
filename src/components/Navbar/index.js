@@ -20,6 +20,7 @@ import HomeIcon from '@mui/icons-material/Home'
 import { navbarItems } from './consts/index'
 import { theme } from '../../styles/theme'
 import Advertising from '../Advertising'
+import Logo from '../../assets/logo.png'
 
 const drawerWidth = 260
 
@@ -111,6 +112,14 @@ const Navbar = () => {
           >
             <MenuIcon />
           </IconButton>
+          <Box component="span" sx={{ mr: '.3rem', mt: '.2rem' }}>
+            <img
+              src={Logo}
+              width="64"
+              height="64"
+              alt="Hotel bellas olas logo"
+            />
+          </Box>
           <Typography variant="h6" noWrap component="div">
             Tu-Destino
           </Typography>
