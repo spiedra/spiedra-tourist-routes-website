@@ -4,7 +4,7 @@ import DialogTitle from '@mui/material/DialogTitle'
 import Dialog from '@mui/material/Dialog'
 import { Button, DialogActions } from '@mui/material'
 
-const Modal = (props) => {
+const Modal = props => {
   return (
     <Dialog
       open={props.isOpen}
@@ -15,7 +15,7 @@ const Modal = (props) => {
       <DialogTitle>{props.title}</DialogTitle>
       <DialogContent>{props.content}</DialogContent>
       <DialogActions>
-        <Button type="submit" form={props.idForm} onClick={props.onSubmit}>
+        <Button type='submit' form={props.idForm} onClick={props.onSubmit}>
           Aceptar
         </Button>
         <Button onClick={props.onClose}>Cerrar</Button>
