@@ -10,8 +10,10 @@ import { useNavigate } from 'react-router'
 
 const arraySites = [
   { name: 'Inicio', route: '' },
-  { name: 'Rutas Turísticas', route: 'tourist-routes' },
-  { name: 'Mapa del sitio', route: 'site-map' }
+  { name: 'Zonas Turísticas', route: 'tourist-routes' },
+  { name: 'Mapa del sitio', route: 'site-map' },
+  { name: 'Acerca de nosostros', route: 'about-us' },
+  { name: 'Contáctanos', route: 'contact-us' }
 ]
 
 const SiteMap = () => {
