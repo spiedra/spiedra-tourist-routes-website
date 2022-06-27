@@ -106,7 +106,7 @@ const TouristRoutes = () => {
   return (
     <>
       <Box>
-        <h1>Rutas Turísticas</h1>
+        <h1>Zonas Turísticas</h1>
         {/* <Box
           sx={{
             display: 'flex',
@@ -192,7 +192,7 @@ const TouristRoutes = () => {
         onClose={() => setIsModalOpen(false)}
         onSubmit={() => setIsModalOpen(false)}
         maxWidth="lg"
-        title={'Detalles de la ruta turística'}
+        title={'Detalles de la zona turística'}
         content={modalBody}
       />
     </>
