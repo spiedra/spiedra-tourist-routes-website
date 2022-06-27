@@ -19,6 +19,7 @@ import HomeIcon from '@mui/icons-material/Home'
 
 import { navbarItems } from './consts/index'
 import { theme } from '../../styles/theme'
+import Advertising from '../Advertising'
 
 const drawerWidth = 260
 
@@ -93,6 +94,7 @@ const Navbar = () => {
           </ListItem>
         ))}
       </List>
+      {<Advertising />}
     </div>
   )
 

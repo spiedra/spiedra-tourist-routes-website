@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 
 import {
@@ -69,27 +70,27 @@ const TouristRoutes = () => {
           <h1>{modalData.name}</h1>
           <h2>{modalData.location}</h2>
           <Box
-                    component="img"
-                    sx={{
-                      Width: { xs: '100%', md: '430px' },
-                      height: '430px',
-                      objectFit: 'cover'
-                    }}
-                    alt="Imagen de un lugar turistico"
-                    src={getRandomImage(randomNumberByRange(0, 19))}
-            />
+            component="img"
+            sx={{
+              Width: { xs: '100%', md: '430px' },
+              height: '430px',
+              objectFit: 'cover'
+            }}
+            alt="Imagen de un lugar turistico"
+            src={getRandomImage(randomNumberByRange(0, 19))}
+          />
           <h2>Localización en Mapa</h2>
           <Box sx={{ width: '100%' }}>
-              <iframe
-                src={getLocation()}
-                width="100%"
-                height="450"
-                style={{ border: 0 }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
-            </Box>
+            <iframe
+              src={getLocation()}
+              width="100%"
+              height="450"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </Box>
           <h2>{`Acerca de la ruta ${modalData.name}`}</h2>
           <Box component="p" sx={{ textAlign: 'justify', lineHeight: '28px' }}>
             {modalData.description}
@@ -106,7 +107,7 @@ const TouristRoutes = () => {
     <>
       <Box>
         <h1>Rutas Turísticas</h1>
-        <Box
+        {/* <Box
           sx={{
             display: 'flex',
             justifyContent: 'flex-start',
@@ -147,7 +148,7 @@ const TouristRoutes = () => {
               <TextField {...params} placeholder="Categoría" />
             )}
           />
-        </Box>
+        </Box> */}
         <Box
           sx={{
             display: 'flex',
